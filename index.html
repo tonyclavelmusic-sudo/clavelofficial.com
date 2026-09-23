@@ -7,7 +7,7 @@
 <meta name="description" content="CLAVEL. House music with a straight face. DJ and producer from Orange County, California. Bookings: booking@clavelofficial.com">
 <link rel="canonical" href="https://clavelofficial.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#F3F0EB">
+<meta name="theme-color" content="#FAFAF8">
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="CLAVEL">
 <meta property="og:title" content="CLAVEL — DJ &amp; Producer">
@@ -22,19 +22,19 @@
 <meta name="twitter:image" content="https://clavelofficial.com/img/og.jpg">
 
 <style>
-  /* Palette v4, 2026-09-23 — warm neutrals modelled on Brunello Cucinelli's site. Off-white ground,
-     stone panel, warm charcoal. The petrol blue is carried by the photography, never by the graphics. */
+  /* Palette v5, 2026-09-23 — white, black, one red. Red is the carnation: the name, and his father's
+     band. Used as a band (ticker), a block (bookings) and hairline accents; never as a type colour on
+     long text. The petrol blue is carried by the photography only. */
   :root{
-    --paper:#F3F0EB;        /* warm off-white ground — Brunello, not bright white */
-    --stone:#E7E2DA;        /* stone panel for the Live block */
-    --ink:#1E1D1B;          /* warm charcoal type and the bookings block */
-    --taupe:#8A7F72;        /* the one accent: eyebrow, hairlines */
-    --sand:#D9D2C7;         /* links on charcoal */
-    --body:#3A3733;
-    --muted:rgba(30,29,27,.55);
-    --rule:rgba(30,29,27,.14);
-    --rule-strong:rgba(30,29,27,.32);
-    /* petrol blue stays in the photography only */
+    --paper:#FAFAF8;        /* near-white ground */
+    --ink:#0B0B0B;          /* near-black type, the Live block */
+    --red:#D6281F;          /* the one colour: carnation red — Clavel, Los Claveles Rojos */
+    --stone:#EFEEEA;        /* player backgrounds */
+    --body:#242424;
+    --muted:rgba(11,11,11,.55);
+    --rule:rgba(11,11,11,.12);
+    --rule-strong:rgba(11,11,11,.3);
+    /* petrol blue stays in the photography; against the red it reads as contrast, not clash */
 
     --display:"Arial Black","Helvetica Neue",Helvetica,Arial,sans-serif;
     --face:Arial,"Helvetica Neue",Helvetica,sans-serif;
@@ -48,9 +48,9 @@
     font-family:var(--face);font-size:1rem;line-height:1.55;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
-  ::selection{background:var(--ink);color:var(--paper);}
+  ::selection{background:var(--red);color:#fff;}
   a{color:inherit;text-decoration:none;}
-  a:focus-visible{outline:2px solid var(--taupe);outline-offset:3px;}
+  a:focus-visible{outline:2px solid var(--red);outline-offset:3px;}
   img,video{max-width:100%;height:auto;display:block;}
 
   .caps{font-size:.6875rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;}
@@ -64,13 +64,13 @@
     position:sticky;top:env(safe-area-inset-top,0px);z-index:10;
     display:flex;align-items:center;justify-content:space-between;gap:1rem;
     height:var(--nav-h);padding:0 var(--gutter);
-    background:rgba(243,240,235,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    background:rgba(250,250,248,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
     border-bottom:1px solid var(--rule);
   }
   .brand{font-family:var(--display);font-weight:900;font-size:1rem;letter-spacing:-.02em;text-transform:uppercase;color:var(--ink);}
   .nav-links{display:flex;gap:1.75rem;color:var(--ink);}
   .nav-links a{border-bottom:1px solid transparent;padding-bottom:.125rem;}
-  .nav-links a:hover{border-bottom-color:var(--ink);}
+  .nav-links a:hover{border-bottom-color:var(--red);}
 
   /* ---------- hero ---------- */
   .hero{
@@ -81,7 +81,7 @@
     display:flex;flex-direction:column;justify-content:space-between;
     padding:clamp(2rem,5vw,4rem) var(--gutter) clamp(1.75rem,4vw,3rem);min-width:0;
   }
-  .eyebrow{color:var(--taupe);margin:0;}
+  .eyebrow{color:var(--red);margin:0;}
   .wordmark{
     font-family:var(--display);font-weight:900;text-transform:uppercase;
     font-size:clamp(4rem,9vw,9.5rem);line-height:.84;letter-spacing:-.05em;margin:0;color:var(--ink);
@@ -91,28 +91,31 @@
     margin-top:clamp(1.5rem,4vw,3rem);padding-top:1rem;border-top:1px solid var(--rule-strong);color:var(--ink);
   }
   .hero-foot a{border-bottom:1px solid var(--rule-strong);}
-  .hero-foot a:hover{border-bottom-color:var(--ink);}
+  .hero-foot a:hover{border-bottom-color:var(--red);color:var(--red);}
   .hero-photo{position:relative;min-height:0;}
   .hero-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;}
 
   /* ---------- ticker ---------- */
   .ticker{
-    overflow:hidden;white-space:nowrap;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
-    padding:.6rem 0;color:var(--ink);
+    overflow:hidden;white-space:nowrap;background:var(--red);color:#fff;padding:.7rem 0;
   }
   .ticker-track{display:inline-flex;gap:0;animation:ticker 38s linear infinite;}
   .ticker span{padding:0 1.5rem;}
-  .ticker span::after{content:"🗿";margin-left:3rem;font-size:.75rem;}
+  .ticker span::after{content:"✦";margin-left:3rem;font-size:.6rem;opacity:.85;}
   @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
   /* ---------- sections ---------- */
   .section{padding:clamp(3rem,7vw,5.5rem) var(--gutter);border-bottom:1px solid var(--rule);}
   .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:0 0 clamp(1.5rem,3vw,2.5rem);}
-  .section-head .caps{color:var(--muted);}
+  .section-head .caps{color:var(--red);}
 
   /* live — the blue block */
-  .live{background:var(--stone);color:var(--ink);padding:clamp(3rem,7vw,5.5rem) var(--gutter);}
-  .live .section-head .caps{color:var(--muted);}
+  .live{background:var(--ink);color:#fff;padding:clamp(3rem,7vw,5.5rem) var(--gutter);}
+  .live .h2{color:#fff;}
+  .live .section-head .caps{color:var(--red);}
+  .live .after{color:rgba(255,255,255,.55);}
+  .live .after a{color:#fff;border-bottom-color:rgba(255,255,255,.35);}
+  .live .after a:hover{border-bottom-color:var(--red);}
   .strip{
     display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(.5rem,1.2vw,.875rem);
   }
@@ -121,7 +124,7 @@
 
 
   /* music — agenda-style rows */
-  .list{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule-strong);}
+  .list{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink);}
   .list li{
     display:grid;grid-template-columns:4.5rem minmax(0,1.2fr) minmax(0,1.6fr) auto;gap:1rem 1.5rem;
     align-items:baseline;padding:1rem 0;border-bottom:1px solid var(--rule);
@@ -131,10 +134,10 @@
   .list .rel i{font-style:italic;}
   .list .status{color:var(--muted);}
   .list .status a{color:var(--ink);border-bottom:1px solid var(--rule-strong);}
-  .list .status a:hover{border-bottom-color:var(--ink);}
+  .list .status a:hover{color:var(--red);border-bottom-color:var(--red);}
   .after{margin:1.25rem 0 0;color:var(--muted);font-size:.9375rem;max-width:60ch;}
   .after a{color:var(--ink);border-bottom:1px solid var(--rule-strong);}
-  .after a:hover{border-bottom-color:var(--ink);}
+  .after a:hover{color:var(--red);border-bottom-color:var(--red);}
 
   /* listen — embedded players */
   .players{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:clamp(2rem,4vw,3rem);}
@@ -153,23 +156,23 @@
 
   /* bookings — the second blue block */
   .contact{
-    background:var(--ink);color:var(--paper);
+    background:var(--red);color:#fff;
     padding:clamp(3.5rem,8vw,6rem) var(--gutter) clamp(2.5rem,5vw,4rem);
   }
-  .contact .h2{color:var(--paper);}
+  .contact .h2{color:#fff;}
   .book{
     font-family:var(--display);font-weight:900;text-transform:uppercase;letter-spacing:-.035em;
-    font-size:clamp(1.1rem,4.6vw,3.5rem);line-height:1.05;margin:0;color:var(--paper);word-break:normal;
+    font-size:clamp(1.1rem,4.6vw,3.5rem);line-height:1.05;margin:0;color:#fff;word-break:normal;
   }
-  .book a{border-bottom:3px solid rgba(243,240,235,.3);}
-  .book a:hover{border-bottom-color:var(--paper);}
-  .links{display:flex;flex-wrap:wrap;gap:.5rem 2rem;margin-top:2rem;color:var(--sand);}
+  .book a{border-bottom:3px solid rgba(255,255,255,.35);}
+  .book a:hover{border-bottom-color:#fff;}
+  .links{display:flex;flex-wrap:wrap;gap:.5rem 2rem;margin-top:2rem;color:rgba(255,255,255,.85);}
   .links a{border-bottom:1px solid transparent;}
-  .links a:hover{color:var(--paper);border-bottom-color:var(--paper);}
+  .links a:hover{color:#fff;border-bottom-color:#fff;}
   .contact footer{
     display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 2rem;
-    margin-top:clamp(2.5rem,6vw,4rem);padding-top:1.25rem;border-top:1px solid rgba(243,240,235,.2);
-    color:rgba(243,240,235,.55);
+    margin-top:clamp(2.5rem,6vw,4rem);padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.3);
+    color:rgba(255,255,255,.7);
   }
 
   @media (max-width:52rem){
@@ -279,8 +282,8 @@
       </li>
     </ul>
     <div class="players">
-      <iframe title="Clavel — BBB on SoundCloud" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fobsessionsrecords%2Fclavel-bbb-4&color=%231e1d1b&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
-      <iframe title="Careless Whisper (Clavel Remix) on SoundCloud" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fclavelmusic%2Fgeorge-michael-careless-1&color=%231e1d1b&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
+      <iframe title="Clavel — BBB on SoundCloud" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fobsessionsrecords%2Fclavel-bbb-4&color=%23d6281f&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
+      <iframe title="Careless Whisper (Clavel Remix) on SoundCloud" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fclavelmusic%2Fgeorge-michael-careless-1&color=%23d6281f&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
     </div>
     <p class="after">Promos and unreleased material available on request.</p>
   </section>
