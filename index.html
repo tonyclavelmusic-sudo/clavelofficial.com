@@ -29,9 +29,10 @@
     --paper:#FAFAF8;        /* near-white ground */
     --ink:#0B0B0B;          /* near-black type, the Live block */
     --red:#D6281F;          /* the one colour: carnation red — Clavel, Los Claveles Rojos */
+    --red-on-ink:#E84A40;   /* the same red lifted for small type on the black Live block: 5.1:1 (raw red is 3.9) */
     --stone:#EFEEEA;        /* player backgrounds */
     --body:#242424;
-    --muted:rgba(11,11,11,.55);
+    --muted:rgba(11,11,11,.62); /* 5.5:1 on paper — .55 was 4.3, under WCAG AA */
     --rule:rgba(11,11,11,.12);
     --rule-strong:rgba(11,11,11,.3);
     /* petrol blue stays in the photography; against the red it reads as contrast, not clash */
@@ -42,7 +43,7 @@
     --nav-h:3.5rem;
   }
 
-  html{background:var(--paper);color-scheme:light;scroll-behavior:smooth;}
+  html{background:var(--paper);color-scheme:light;scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 1rem);}
   body{
     margin:0;background:var(--paper);color:var(--body);
     font-family:var(--face);font-size:1rem;line-height:1.55;
@@ -50,8 +51,12 @@
   }
   ::selection{background:var(--red);color:#fff;}
   a{color:inherit;text-decoration:none;}
-  a:focus-visible{outline:2px solid var(--red);outline-offset:3px;}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--red);outline-offset:3px;}
   img,video{max-width:100%;height:auto;display:block;}
+
+  /* skip link — first thing a keyboard reaches; hidden until focused */
+  .skip{position:absolute;left:var(--gutter);top:-4rem;z-index:20;background:var(--ink);color:#fff;padding:.75rem 1rem;}
+  .skip:focus-visible{top:.5rem;}
 
   .caps{font-size:.6875rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;}
   .h2{
@@ -103,6 +108,16 @@
   .ticker span{padding:0 1.5rem;}
   .ticker span::after{content:"✦";margin-left:3rem;font-size:.6rem;opacity:.85;}
   @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  /* one button stops all motion — the ticker and the live loop (WCAG 2.2.2) */
+  .ticker-wrap{position:relative;}
+  .motion{
+    position:absolute;top:0;right:0;bottom:0;margin:0;cursor:pointer;
+    background:var(--red);color:#fff;border:0;border-left:1px solid rgba(255,255,255,.4);
+    padding:0 var(--gutter) 0 1.25rem;font-family:var(--face);
+  }
+  .motion:hover{text-decoration:underline;text-underline-offset:3px;}
+  .motion:focus-visible{outline:2px solid #fff;outline-offset:-5px;}
+  .still .ticker-track{animation-play-state:paused;}
 
   /* ---------- sections ---------- */
   .section{padding:clamp(3rem,7vw,5.5rem) var(--gutter);border-bottom:1px solid var(--rule);}
@@ -112,7 +127,7 @@
   /* live — the blue block */
   .live{background:var(--ink);color:#fff;padding:clamp(3rem,7vw,5.5rem) var(--gutter);}
   .live .h2{color:#fff;}
-  .live .section-head .caps{color:var(--red);}
+  .live .section-head .caps{color:var(--red-on-ink);}
   .live .after{color:rgba(255,255,255,.55);}
   .live .after a{color:#fff;border-bottom-color:rgba(255,255,255,.35);}
   .live .after a:hover{border-bottom-color:var(--red);}
@@ -142,6 +157,16 @@
   /* listen — embedded players */
   .players{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:clamp(2rem,4vw,3rem);}
   .players iframe{width:100%;height:166px;border:0;display:block;background:var(--stone);}
+  /* click-to-play: SoundCloud's player (and its cookies) loads only when someone presses play */
+  .player{
+    display:flex;flex-direction:column;justify-content:center;gap:.5rem;width:100%;height:166px;
+    padding:0 1.5rem;margin:0;text-align:left;cursor:pointer;
+    background:var(--stone);color:var(--ink);border:1px solid transparent;font-family:var(--face);
+  }
+  .player:hover{border-color:var(--red);}
+  .player .caps{color:var(--red);}
+  .player-title{font-family:var(--display);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;font-size:1.5rem;line-height:1.05;}
+  .player-rel{color:var(--muted);font-size:.9375rem;}
 
   /* photos */
   .plates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.5rem,1.5vw,1rem);}
@@ -166,14 +191,18 @@
   }
   .book a{border-bottom:3px solid rgba(255,255,255,.35);}
   .book a:hover{border-bottom-color:#fff;}
-  .links{display:flex;flex-wrap:wrap;gap:.5rem 2rem;margin-top:2rem;color:rgba(255,255,255,.85);}
+  .contact a:focus-visible{outline-color:#fff;} /* a red ring vanishes on the red block */
+  /* small type on red is full white: .85 measured 4.0:1 and .7 measured 3.1:1, both under AA */
+  .links{display:flex;flex-wrap:wrap;gap:.5rem 2rem;margin-top:2rem;color:#fff;}
   .links a{border-bottom:1px solid transparent;}
   .links a:hover{color:#fff;border-bottom-color:#fff;}
   .contact footer{
     display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 2rem;
     margin-top:clamp(2.5rem,6vw,4rem);padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.3);
-    color:rgba(255,255,255,.7);
+    color:#fff;
   }
+  .contact footer a{border-bottom:1px solid rgba(255,255,255,.5);}
+  .contact footer a:hover{border-bottom-color:#fff;}
 
   @media (max-width:52rem){
     .nav-links{gap:.875rem;font-size:.625rem;letter-spacing:.12em;}
@@ -205,7 +234,9 @@
 </head>
 <body>
 
-<nav class="nav caps">
+<a class="skip caps" href="#main">Skip to content</a>
+
+<nav class="nav caps" aria-label="Sections">
   <a class="brand" href="#top">Clavel</a>
   <div class="nav-links">
     <a href="#live">Live</a>
@@ -215,6 +246,8 @@
     <a href="#bookings">Bookings</a>
   </div>
 </nav>
+
+<main id="main">
 
 <header class="hero" id="top">
   <div class="hero-type">
@@ -228,18 +261,19 @@
     </div>
   </div>
   <div class="hero-photo">
-    <img src="img/hero.jpg" alt="CLAVEL, studio portrait" width="832" height="1248" fetchpriority="high">
+    <img src="img/hero.jpg" alt="CLAVEL in an LA cap and white graphic tee, arms crossed, against a petrol-blue backdrop" width="832" height="1248" fetchpriority="high">
   </div>
 </header>
 
-<div class="ticker caps" aria-hidden="true">
-  <div class="ticker-track">
-    <span>Clavel</span><span>House music with a straight face</span><span>DJ &amp; Producer</span><span>Obsessions Recordings</span><span>Orange County, California</span>
-    <span>Clavel</span><span>House music with a straight face</span><span>DJ &amp; Producer</span><span>Obsessions Recordings</span><span>Orange County, California</span>
+<div class="ticker-wrap">
+  <div class="ticker caps" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Clavel</span><span>House music with a straight face</span><span>DJ &amp; Producer</span><span>Obsessions Recordings</span><span>Orange County, California</span>
+      <span>Clavel</span><span>House music with a straight face</span><span>DJ &amp; Producer</span><span>Obsessions Recordings</span><span>Orange County, California</span>
+    </div>
   </div>
+  <button class="motion caps" type="button" aria-pressed="false">Pause motion</button>
 </div>
-
-<main>
 
   <section class="live" id="live">
     <div class="section-head">
@@ -247,11 +281,11 @@
       <span class="caps">Obsessions Recordings release party &middot; Salt Lake City</span>
     </div>
     <div class="strip">
-      <video src="img/live-loop.mp4" poster="img/live-loop.jpg" autoplay muted loop playsinline preload="metadata" aria-label="CLAVEL playing, short loop"></video>
-      <img src="img/live-1.jpg" alt="CLAVEL behind the decks" width="900" height="1600" loading="lazy">
-      <img src="img/live-2.jpg" alt="CLAVEL behind the decks" width="900" height="1600" loading="lazy">
-      <img src="img/live-3.jpg" alt="The crowd from the booth" width="900" height="1600" loading="lazy">
-      <img src="img/live-4.jpg" alt="CLAVEL behind the decks" width="900" height="1600" loading="lazy">
+      <video src="img/live-loop.mp4" poster="img/live-loop.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Silent loop of CLAVEL mixing at the release party"></video>
+      <img src="img/live-1.jpg" alt="CLAVEL mixing, leaning over the decks" width="900" height="1600" loading="lazy">
+      <img src="img/live-2.jpg" alt="CLAVEL at the decks beside another DJ, crowd behind" width="900" height="1600" loading="lazy">
+      <img src="img/live-3.jpg" alt="The crowd at the release party, seen from the booth" width="900" height="1600" loading="lazy">
+      <img src="img/live-4.jpg" alt="CLAVEL at the decks under red light" width="900" height="1600" loading="lazy">
     </div>
     <p class="after">Live footage and full sets on <a href="https://instagram.com/clavel.music">Instagram</a>.</p>
   </section>
@@ -282,10 +316,18 @@
       </li>
     </ul>
     <div class="players">
-      <iframe title="Clavel — BBB on SoundCloud" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fobsessionsrecords%2Fclavel-bbb-4&color=%23d6281f&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
-      <iframe title="Careless Whisper (Clavel Remix) on SoundCloud" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fclavelmusic%2Fgeorge-michael-careless-1&color=%23d6281f&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
+      <button class="player" type="button" data-title="Clavel — BBB on SoundCloud" data-src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fobsessionsrecords%2Fclavel-bbb-4&color=%23d6281f&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false">
+        <span class="caps">&#9654; Play on SoundCloud</span>
+        <span class="player-title">BBB</span>
+        <span class="player-rel">Obsessions Recordings</span>
+      </button>
+      <button class="player" type="button" data-title="Careless Whisper (Clavel Remix) on SoundCloud" data-src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fclavelmusic%2Fgeorge-michael-careless-1&color=%23d6281f&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false">
+        <span class="caps">&#9654; Play on SoundCloud</span>
+        <span class="player-title">Careless Whisper</span>
+        <span class="player-rel">CLAVEL Edit</span>
+      </button>
     </div>
-    <p class="after">Promos and unreleased material available on request.</p>
+    <p class="after">The players load from SoundCloud when you press play. Promos and unreleased material available on request.</p>
   </section>
 
   <section class="section" id="photos">
@@ -294,9 +336,9 @@
       <span class="caps">📸 Efren</span>
     </div>
     <div class="plates">
-      <img src="img/p1.jpg" alt="CLAVEL, studio portrait" width="832" height="1248" loading="lazy">
-      <img src="img/p2.jpg" alt="CLAVEL, studio portrait" width="832" height="1248" loading="lazy">
-      <img src="img/p3.jpg" alt="CLAVEL, studio portrait" width="832" height="1248" loading="lazy">
+      <img src="img/p1.jpg" alt="CLAVEL seated on a white stool in a brown sweater, petrol-blue backdrop" width="832" height="1248" loading="lazy">
+      <img src="img/p2.jpg" alt="CLAVEL with a jacket slung over one shoulder, petrol-blue backdrop" width="832" height="1248" loading="lazy">
+      <img src="img/p3.jpg" alt="CLAVEL in a brown sweater, looking off to the side" width="832" height="1248" loading="lazy">
     </div>
     <p class="after">High-resolution horizontal and vertical crops supplied on request.</p>
   </section>
@@ -304,12 +346,12 @@
   <section class="section" id="bio">
     <div class="bio">
       <div class="bio-figure">
-        <img src="img/studio-1.jpg" alt="CLAVEL, studio portrait" width="1067" height="1600" loading="lazy">
+        <img src="img/studio-1.jpg" alt="CLAVEL in sunglasses and a beige tee, arms crossed, on a white backdrop" width="1067" height="1600" loading="lazy">
       </div>
       <div>
         <h2 class="h2">Bio</h2>
         <p>CLAVEL is a house and tech house DJ and producer from Orange County, California. The name is his father&rsquo;s band &mdash; Los Claveles Rojos &mdash; and the rhythm came with it: he grew up playing drums, alongside the shaker, cowbell and claves his father kept around the house.</p>
-        <p>Self-taught as a producer and sharpened through Repopulate Mars coursework led by Lee Foss, John Summit and Detlef, he engineers and mixes every record he puts out. That work put him on Obsessions Recordings in March 2026, with &ldquo;BBB&rdquo; landing on the label&rsquo;s Miami Music Week compilation, <i>Ritual(s) Vol. 2</i>. Behind the decks he&rsquo;s held residencies across Orange County and played out to San Francisco and El Paso, Texas.</p>
+        <p>Self-taught as a producer and sharpened through Repopulate Mars courses, he engineers and mixes every record he puts out. That work put him on Obsessions Recordings in March 2026, with &ldquo;BBB&rdquo; landing on the label&rsquo;s Miami Music Week compilation, <i>Ritual(s) Vol. 2</i>. Behind the decks he&rsquo;s held residencies across Orange County and played out to San Francisco and El Paso, Texas.</p>
       </div>
     </div>
   </section>
@@ -326,10 +368,39 @@
     <a href="https://music.apple.com/us/artist/clavel/1886844697">Apple Music</a>
   </div>
   <footer class="caps">
-    <span>CLAVEL &middot; Orange County &middot; 2026 🗿</span>
-    <span>House music with a straight face &middot; <a href="services/">Mixing &amp; mastering</a></span>
+    <span>&copy; 2026 CLAVEL &middot; Orange County, California 🗿</span>
+    <span><a href="privacy/">Privacy</a> &middot; <a href="terms/">Terms</a> &middot; House music with a straight face</span>
   </footer>
 </section>
+
+<script>
+  // Stop all motion: the ticker and the live loop share one button (WCAG 2.2.2). Starts stopped for
+  // visitors who ask their system for reduced motion. Nothing is stored on the device.
+  (function () {
+    var btn = document.querySelector('.motion');
+    var vids = document.querySelectorAll('video[autoplay]');
+    function set(still) {
+      document.body.classList.toggle('still', still);
+      btn.setAttribute('aria-pressed', String(still));
+      btn.textContent = still ? 'Play motion' : 'Pause motion';
+      vids.forEach(function (v) { still ? v.pause() : v.play().catch(function () {}); });
+    }
+    btn.addEventListener('click', function () { set(!document.body.classList.contains('still')); });
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) set(true);
+  })();
+
+  // Click-to-play: SoundCloud's player, and anything it sets, loads only after someone presses play.
+  document.querySelectorAll('.player[data-src]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = document.createElement('iframe');
+      f.src = b.dataset.src;
+      f.title = b.dataset.title;
+      f.allow = 'autoplay';
+      b.replaceWith(f);
+      f.focus();
+    });
+  });
+</script>
 
 </body>
 </html>
